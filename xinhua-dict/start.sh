@@ -1,0 +1,1 @@
+export FLASK_APP=xinhuadict.py flask run
