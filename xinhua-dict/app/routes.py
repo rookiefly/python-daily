@@ -11,13 +11,14 @@ def index():
     return "Hello, World!"
 
 
-@app.route('/dictionary')
+@app.route('/dict')
 def searchDict():
-    key = request.args.get('key')
+    word = request.args.get('word')
     script_dir = dirname(dirname(abspath(__file__)))
     with open(join(script_dir, "data/word.json"), 'r') as jsonFile:
         wordDict = json.load(jsonFile)
-        return Response(json.dumps(jsonpath.jsonpath(wordDict, "$.[?(@.word=='" + key + "')]")), mimetype='application/json')
+        wordResult = jsonpath.jsonpath(wordDict, "$.[?(@.word=='" + word + "')]")
+        return Response(json.dumps(wordResult, ensure_ascii=False), mimetype='application/json')
 
 
 @app.route('/json')
